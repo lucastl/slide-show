@@ -1,0 +1,41 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#partners-wrap {
+    display: flex;
+    align-items: center;
+}
+
+#partners {
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 200px;
+    display: flex;
+    position: relative;
+}
+
+#images-wrap {
+    display: grid;
+    grid-auto-flow: column;
+    padding: 0;
+}
+
+.image {
+    display: flex;
+    align-items: center;
+    width: 15rem;
+    justify-content: center;
+    transition: all .26s ease-in-out;
+    filter: grayscale(1)
+}
+
+.image:hover {
+    filter: grayscale(0)
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+}
