@@ -8,7 +8,7 @@ class SlideShow extends HTMLElement {
         this.itemWidth = 0;
         this.length = partners.length;
         this.imagesWrap = undefined;
-        this.imagesList = partners.sort((a, b) => b.order - a.order);
+        this.imagesList = partners.sort((a, b) => a.order - b.order);
         this.time = undefined;
     }
 
