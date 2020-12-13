@@ -1,21 +1,36 @@
 import partners from '../data/partnersList.js';
 
-class SlideShow {
+class SlideShow extends HTMLElement {
 
-    constructor(idContainer, time) {
-        this.appContainer = document.getElementById(idContainer);
-        this.btnLeft = document.getElementById('btnLeft');
-        this.btnRight = document.getElementById('btnRight');
-        this.currentXscroll = 0;
+    constructor() {
+        super();
+        this.appContainer = undefined;
         this.itemWidth = 0;
         this.length = partners.length;
-        this.imagesWrap = document.getElementById('images-wrap');
+        this.imagesWrap = undefined;
         this.imagesList = partners.sort((a, b) => b.order - a.order);
-        this.autoSlide = setInterval(this.scrollLeft, time);
-        this.time = time;
+        this.time = undefined;
+    }
 
+    connectedCallback() {
+        const idContainer = this.getAttribute('idContainer');
+        const time = this.getAttribute('time');
+
+        this.innerHTML = `
+            <main id="partners-wrap">
+                <section id="${idContainer}">
+                    <div id="images-wrap"></div>
+                </section>
+            </main>
+        `;
+
+        this.appContainer = document.getElementById(idContainer);
+        this.time = time;
+        this.imagesWrap = document.getElementById('images-wrap');
         this.renderImages();
     }
+
+    autoSlide = () => setInterval(this.scrollLeft, this.time);
 
     template = partner => `<figure class="image"><a href="${partner.url}" target="_blank"><img src="${partner.filePath}"></a></figure>`;
 
@@ -24,11 +39,8 @@ class SlideShow {
             this.imagesWrap.innerHTML = this.imagesWrap.innerHTML + this.template(partner);
         });
         this.itemWidth = document.querySelector('.image').scrollWidth;
+        this.autoSlide();
         return;
-    };
-
-    setCurrentScrollX = () => {
-        this.currentXscroll = this.appContainer.scrollLeft;
     };
 
     moveFirstToEnd = () => {
